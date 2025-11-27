@@ -195,7 +195,17 @@ const AddHikeScreen = ({ navigation, route }) => {
                 </View>
 
                 <Text style={styles.label}>Length of Hike *</Text>
-                <TextInput style={styles.input} value={length} onChangeText={setLength} placeholder="e.g. 5km" keyboardType="numeric" />
+                <TextInput
+                    style={styles.input}
+                    value={length}
+                    onChangeText={(text) => {
+                        const valid = text.replace(/[^0-9.]/g, '');
+                        const parts = valid.split('.');
+                        setLength(parts.length > 2 ? parts[0] + '.' + parts.slice(1).join('') : valid);
+                    }}
+                    placeholder="e.g. 5km"
+                    keyboardType="numericDecimal"
+                />
 
                 <Text style={styles.label}>Difficulty Level *</Text>
                 <View style={styles.pickerContainer}>
